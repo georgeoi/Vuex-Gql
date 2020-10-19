@@ -17,7 +17,7 @@
         methods:{
             agregarTarea(){
                 if(this.tarea.length>0){
-                this.$emit(event= "nuevaTarea", this.tarea)
+                this.$emit("nuevaTarea", this.tarea)
                 }else{
                     alert("no tiene caracterees")
                 }
