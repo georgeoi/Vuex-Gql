@@ -1,12 +1,12 @@
 <template>
     <div>
-        <label>Nueva Tarea</label>
-        <input type="text" v-model="tarea"/>
-        <button @click="agregarTarea">Agregar</button> 
+        <v-text-field label="Nueva Tarea" v-model="tarea" @keyup.enter="nuevaTarea"/>
+        <v-btn color="primary" @click="nuevaTarea">Agregar</v-btn> 
     </div>
 </template>
 
 <script>
+    import {mapMutations} from "vuex"
     export default {
         name: "tareasNueva",
         data(){
@@ -15,9 +15,11 @@
             }
         },
         methods:{
-            agregarTarea(){
+            ...mapMutations(["agregarTarea"]),
+            nuevaTarea(){
                 if(this.tarea.length>0){
-                this.$emit("nuevaTarea", this.tarea)
+                    this.agregarTarea(this.tarea)
+                    this.tarea=""
                 }else{
                     alert("no tiene caracterees")
                 }
