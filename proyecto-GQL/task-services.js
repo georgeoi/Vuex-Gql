@@ -1,5 +1,5 @@
 let tasks = require('./tasks.json')
-
+let contador= 0
 
 module.exports.fetchTasks= ()=> {
     return tasks
@@ -9,14 +9,15 @@ module.exports.findTask= (id)=>{
     }
 module.exports.createTask= ({name})=>{
     let task = {name}
-    task.id= tasks.length + 1
+    contador ++
+    task.id= contador + 3
     tasks.push(task)
     return task
     }
 module.exports.updateTask=(id, {name})=>{
     let index = tasks.findIndex(task=> task.id == id)
-    task[index] = {id,name}
-    return task[index]
+    tasks[index] = {id,name}
+    return tasks[index]
 }
 module.exports.deleteTask= (id)=>{
     let index = tasks.findIndex(task=> task.id == id)
@@ -25,6 +26,6 @@ module.exports.deleteTask= (id)=>{
         return false
     }
 
-    books.splice(index,1)
+    tasks.splice(index,1)
     return true
 }

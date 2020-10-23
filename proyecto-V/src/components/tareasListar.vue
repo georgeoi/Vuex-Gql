@@ -1,7 +1,7 @@
 <template>
     <ul>
-        <li class="ma-2" v-for="(tarea,index) in obtenerTareasFiltradas" :key="index">
-            <template v-if="editando===index">
+        <li class="ma-2" v-for="tarea in obtenerTareasFiltradas" :key="tarea.id">
+            <template v-if="editando=== tarea.id">
                 <v-row>
                     <v-col cols="8">
                         <v-text-field dense hide-details solo type="text" v-model="texto" @keyup.enter="emitirTarea()"/>
@@ -12,11 +12,11 @@
                 </v-row>
             </template>
             <template v-else>
-                {{tarea}}
-                <v-btn icon x-small color="red" class="float-right" @click="removerTarea(index)">
+                {{tarea.name}}
+                <v-btn icon x-small color="red" class="float-right" @click="remueveTarea(tarea.id)">
                     <v-icon>mdi-delete</v-icon>
                 </v-btn>
-                <v-btn icon x-small color="blue" class="float-right" @click="editarTarea(index,tarea)">
+                <v-btn icon x-small color="blue" class="float-right" @click="editarTarea(tarea.id,tarea.name)">
                     <v-icon>mdi-pencil</v-icon>
                 </v-btn>
             </template>  
@@ -25,7 +25,7 @@
     </ul>
 </template>
 <script>
-import {mapGetters, mapMutations} from "vuex"
+import {mapActions, mapGetters, mapMutations} from "vuex"
 export default {
     name: "tareasListar",
     data(){
@@ -38,13 +38,14 @@ export default {
         ...mapGetters(["obtenerTareasFiltradas"])
     },
     methods:{
-        ...mapMutations(["removerTarea", "modificarTareas"]),
-        editarTarea(index,tarea){
-            this.editando = index;
+        ...mapMutations(["modificarTareas"]),
+        ...mapActions(["remueveTarea", "actualizaTarea"]),
+        editarTarea(id,tarea){
+            this.editando = id;
             this.texto= tarea;
         },
         emitirTarea(){
-            this.modificarTareas({index: this.editando, tarea: this.texto});
+            this.actualizaTarea({id: this.editando, tarea: this.texto});
             this.editando= null
             this.texto=""
         }

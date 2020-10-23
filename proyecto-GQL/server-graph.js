@@ -47,7 +47,7 @@ const resolvers = {
 };
 
 
-// const APP_URL= 'http://localhost:8080';
+const APP_URL= 'http://localhost:8080';
 
 const schema = new ApolloServer({ typeDefs, resolvers });
 
@@ -58,8 +58,8 @@ const schema = new ApolloServer({ typeDefs, resolvers });
 const app = express();
 schema.applyMiddleware({ app })
 
-// app.options("*", cors());
-// app.use(cors({origin: APP_URL}));
+app.options("*", cors());
+app.use(cors({origin: APP_URL}));
 
 // app.use("/graphql", bodyParser.json(), graphqlExpress({ schema }));
 // app.get('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
@@ -67,5 +67,5 @@ schema.applyMiddleware({ app })
 // server.applyMiddleware({ app });
 
 app.listen({port: 3000}, () =>
-  console.log(`Now browse to http://localhost:3000/graphiql to run queries`)
+  console.log(`Now browse to http://localhost:3000`+ schema.graphqlPath )
 );
