@@ -37,9 +37,9 @@ const ADD_TASK= gql`
                     alert("no tiene caracterees")
                 }
             },
-            agregaTarea(){
+            async agregaTarea(){
                 const nombre= this.tarea
-                graphqlClient.mutate({
+                await graphqlClient.mutate({
                     mutation: ADD_TASK,
                     variables: {
                     name: nombre,
@@ -48,7 +48,6 @@ const ADD_TASK= gql`
             this.tarea=""
             this.cargarTareas();
             this.agregarTarea();
-            document.location.reload();
             }
         }
     }

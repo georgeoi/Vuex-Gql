@@ -39,15 +39,17 @@ export default {
     },
     methods:{
         ...mapMutations(["modificarTareas"]),
-        ...mapActions(["remueveTarea", "actualizaTarea"]),
+        ...mapActions(["remueveTarea", "actualizaTarea", "cargarTareas"]),
         editarTarea(id,tarea){
             this.editando = id;
             this.texto= tarea;
+            console.log("this.texto",this.texto);
         },
         emitirTarea(){
             this.actualizaTarea({id: this.editando, tarea: this.texto});
             this.editando= null
             this.texto=""
+            this.cargarTareas()
         }
     }
 }

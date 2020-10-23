@@ -40,7 +40,7 @@ export default new Vuex.Store(
       state.notificar="eliminar";
     },
     modificarTareas(state){
-      // Vue.set(state.tareas,index,tarea);
+      // this.$set(state.tareas,index,tarea);
       state.notificar="editar";
     },
     setFiltro(state, value){
@@ -63,9 +63,9 @@ export default new Vuex.Store(
       })
       commit("setTareas", response.data.tasks);
     },
-    remueveTarea({commit},id){
+    async remueveTarea({commit},id){
       const dni= id
-      graphqlClient.mutate({
+      await graphqlClient.mutate({
           mutation: REMOVE_TASK,
           variables: {
           id:dni,
@@ -73,10 +73,10 @@ export default new Vuex.Store(
       });
       commit("removerTarea")
     },
-    actualizaTarea({commit},{id,tarea}){
+    async actualizaTarea({commit},{id,tarea}){
       console.log(tarea)
       console.log(id)
-      graphqlClient.mutate({
+      await graphqlClient.mutate({
         mutation: UPDATE_TASK,
         variables: {
         id:id,
